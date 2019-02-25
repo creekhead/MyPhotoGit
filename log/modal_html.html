@@ -1,0 +1,55 @@
+ <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+  <!-- Modal -->
+	<div class="modal fade" id="myModal" role="dialog">
+	    <div class="modal-dialog-new">
+
+	      <!-- Modal content-->
+	      	<div class="modal-content">
+				<div class="modal-header">
+				  <button type="button" class="close" data-dismiss="modal">&times;</button>
+				  <h4 id="modal_header" class="modal-title">Modal Header</h4>
+				</div>
+				<div class="modal-body">
+				  <p>
+					<img id="pictoshow" src="<?=$url?>" style="width: 100%;">
+				  </p>
+				  <span id="modal_footer">
+				  </span>
+				</div>
+				<div class="modal-footer">
+				  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				</div>
+	    	</div>
+		</div>
+	</div>
+
+<script>
+
+$(document).ready(function(){
+
+	jQuery('a').bind('click', function(e) {
+		e.preventDefault();
+		var pic=e.target.href.replace('log/','');
+		var filename=pic.substring(pic.lastIndexOf('/')+1);
+		var urlParts = pic.split("/");
+		var year=urlParts[6];
+		var msg=jQuery(e.target).attr('alt');
+		var exif_orient=jQuery(e.target).attr('exif');
+
+		jQuery('#modal_header').html(year+' : '+filename);
+		var footer="EXIF Orient: "+exif_orient+"<br>";
+		footer+="MSG: "+msg+"<br>";
+		footer+="LINK: <a href='"+pic+"' title='"+pic+"' alt='"+pic+"' target='_blank'>Link</a>";
+		jQuery('#modal_footer').html(footer);
+
+
+		jQuery('#pictoshow').attr('src',pic);
+		$("#myModal").modal();
+
+	});
+
+});
+</script>
